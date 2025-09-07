@@ -1,0 +1,13 @@
+---
+- name: Update web servers
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+  - debug:
+      msg: "test"
+
+  - name: Sleep for 3 seconds and continue with play
+    ansible.builtin.wait_for:
+      timeout: 3
+    delegate_to: localhost
