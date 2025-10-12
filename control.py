@@ -9,14 +9,11 @@ runner = ansible_runner.run(private_data_dir="project", playbook="playbook.yaml"
 print(output.getvalue())
 
 receptor = ReceptorControl("tcp://localhost:2307")
-res = receptor.submit_work("ansible", output.getvalue(), "executor")
+res = receptor.submit_work("ansible", output.getvalue(), "executor", params={"params": "test"}, )
 print(res)
 
 jobid = res['unitid']
 
 res = receptor.get_work_results(jobid)
-lines = 0
 for line in res:
-    print(line)
-    lines = lines + 1
-print(lines)
+    print(line.decode(), end="")
