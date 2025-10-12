@@ -1,6 +1,8 @@
 #!/home/avbudden/.pyenv/shims/python
 from ansible_runner.streaming import Worker
 import os
+import sys
+import json
 
 class MyWorker(Worker):
     def event_handler(self, event_data):
@@ -13,6 +15,13 @@ class MyWorker(Worker):
 
     def finished_callback(self, runner_obj):
         print("FINISHED")
+        return
+        print(runner_obj.config.fact_cache)
+        for file in os.listdir(runner_obj.config.fact_cache):
+            print(file)
+            file = os.path.join(runner_obj.config.fact_cache, file)
+            with open(file) as file:
+                print(json.load(file))
 
 devnull = open(os.devnull, "bw")
 
